@@ -21,6 +21,8 @@ class IssuesHelperTest < ActionView::TestCase
   include ApplicationHelper
   include IssuesHelper
 
+  # TODO
+  # include ActionDispatch::Assertions::SelectorAssertions
   fixtures :projects, :trackers, :issue_statuses, :issues,
            :enumerations, :users, :issue_categories,
            :projects_trackers,
