@@ -22,6 +22,9 @@ class Redmine::Helpers::GanttHelperTest < ActionView::TestCase
   include ProjectsHelper
   include IssuesHelper
 
+  # TODO
+  # include ActionDispatch::Assertions::SelectorAssertions
+
   def setup
     setup_with_controller
     # Fixtures
