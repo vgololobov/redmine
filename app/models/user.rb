@@ -621,7 +621,7 @@ class User < Principal
 end
 
 class AnonymousUser < User
-  validate :validate_anonymous_uniqueness, :on => :create
+  before_validation :validate_anonymous_uniqueness, :on => :create
 
   def validate_anonymous_uniqueness
     # There should be only one AnonymousUser in the database
