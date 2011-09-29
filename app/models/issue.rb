@@ -61,17 +61,17 @@ class Issue < ActiveRecord::Base
   validate :validate_issue
 
   scope :visible,
-               lambda {|*args| { :include => :project,
+               lambda {|*args| { :joins => :project,
                                           :conditions => Issue.visible_condition(args.shift || User.current, *args) } }
 
   scope :open, lambda {|*args|
     is_closed = args.size > 0 ? !args.first : false
-    {:conditions => ["#{IssueStatus.table_name}.is_closed = ?", is_closed], :include => :status}
+    {:conditions => ["#{IssueStatus.table_name}.is_closed = ?", is_closed], :joins => :status}
   }
 
   scope :recently_updated, :order => "#{Issue.table_name}.updated_on DESC"
   scope :with_limit, lambda { |limit| { :limit => limit} }
-  scope :on_active_project, :include => [:status, :project, :tracker],
+  scope :on_active_project, :joins => [:status, :project, :tracker],
                                   :conditions => ["#{Project.table_name}.status=#{Project::STATUS_ACTIVE}"]
 
   before_create :default_assign
@@ -517,6 +517,7 @@ class Issue < ActiveRecord::Base
   def total_spent_hours
     @total_spent_hours ||= self_and_descendants.sum("#{TimeEntry.table_name}.hours",
       :joins => "LEFT JOIN #{TimeEntry.table_name} ON #{TimeEntry.table_name}.issue_id = #{Issue.table_name}.id").to_f || 0.0
+    # @total_spent_hours ||= self_and_descendants.sum("#{TimeEntry.table_name}.hours", :joins => :time_entries).to_f || 0.0
   end
 
   def relations
@@ -819,7 +820,7 @@ class Issue < ActiveRecord::Base
   def recalculate_attributes_for(issue_id)
     if issue_id && p = Issue.find_by_id(issue_id)
       # priority = highest priority of children
-      if priority_position = p.children.maximum("#{IssuePriority.table_name}.position", :include => :priority)
+      if priority_position = p.children.maximum("#{IssuePriority.table_name}.position", :joins => :priority)
         p.priority = IssuePriority.find_by_position(priority_position)
       end
 
@@ -838,7 +839,7 @@ class Issue < ActiveRecord::Base
           if average == 0
             average = 1
           end
-          done = p.leaves.sum("COALESCE(estimated_hours, #{average}) * (CASE WHEN is_closed = #{connection.quoted_true} THEN 100 ELSE COALESCE(done_ratio, 0) END)", :include => :status).to_f
+          done = p.leaves.sum("COALESCE(estimated_hours, #{average}) * (CASE WHEN is_closed = #{connection.quoted_true} THEN 100 ELSE COALESCE(done_ratio, 0) END)", :joins => :status).to_f
           progress = done / (average * leaves_count)
           p.done_ratio = progress.round
         end
