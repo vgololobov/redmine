@@ -35,6 +35,8 @@ group :assets do
   gem 'uglifier'
 end
 
+gem 'rails_autolink'
+
 group :development do
 end
 
