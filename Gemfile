@@ -36,6 +36,7 @@ group :assets do
 end
 
 gem 'rails_autolink'
+gem 'rails_legacy_mapper'
 
 group :development do
 end
