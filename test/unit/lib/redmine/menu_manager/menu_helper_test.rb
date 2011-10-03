@@ -21,6 +21,9 @@ class Redmine::MenuManager::MenuHelperTest < ActionView::TestCase
 
   include Redmine::MenuManager::MenuHelper
   include ERB::Util
+
+  # TODO
+  # include ActionDispatch::Assertions::SelectorAssertions
   fixtures :users, :members, :projects, :enabled_modules
 
   def setup
