@@ -1622,7 +1622,7 @@ class IssuesControllerTest < ActionController::TestCase
     mail = ActionMailer::Base.deliveries.last
     assert_kind_of Mail::Message, mail
     assert mail.subject.starts_with?("[#{issue.project.name} - #{issue.tracker.name} ##{issue.id}]")
-    assert mail.body.include?("Subject changed from #{old_subject} to #{new_subject}")
+    assert mail.body.encoded.include?("Subject changed from #{old_subject} to #{new_subject}")
   end
 
   def test_put_update_with_custom_field_change
@@ -1645,7 +1645,7 @@ class IssuesControllerTest < ActionController::TestCase
 
     mail = ActionMailer::Base.deliveries.last
     assert_kind_of Mail::Message, mail
-    assert mail.body.include?("Searchable field changed from 125 to New custom value")
+    assert mail.body.encoded.include?("Searchable field changed from 125 to New custom value")
   end
 
   def test_put_update_with_status_and_assignee_change
@@ -1667,7 +1667,7 @@ class IssuesControllerTest < ActionController::TestCase
     assert_equal 2, j.details.size
 
     mail = ActionMailer::Base.deliveries.last
-    assert mail.body.include?("Status changed from New to Assigned")
+    assert mail.body.encoded.include?("Status changed from New to Assigned")
     # subject should contain the new status
     assert mail.subject.include?("(#{ IssueStatus.find(2).name })")
   end
@@ -1685,7 +1685,7 @@ class IssuesControllerTest < ActionController::TestCase
     assert_equal User.anonymous, j.user
 
     mail = ActionMailer::Base.deliveries.last
-    assert mail.body.include?(notes)
+    assert mail.body.encoded.include?(notes)
   end
 
   def test_put_update_with_note_and_spent_time
@@ -1743,7 +1743,7 @@ class IssuesControllerTest < ActionController::TestCase
     assert_equal 59, File.size(attachment.diskfile)
 
     mail = ActionMailer::Base.deliveries.last
-    assert mail.body.include?('testfile.txt')
+    assert mail.body.encoded.include?('testfile.txt')
   end
 
   def test_put_update_with_attachment_that_fails_to_save
