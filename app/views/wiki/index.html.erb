@@ -10,7 +10,7 @@
 
 <%= render_page_hierarchy(@pages_by_parent_id, nil, :timestamp => true) %>
 
-<% content_for :sidebar do %>
+<%= content_for :sidebar do %>
   <%= render :partial => 'sidebar' %>
 <% end %>
 
@@ -21,6 +21,8 @@
 <% end %>
 <% end %>
 
-<% content_for :header_tags do %>
-<%= auto_discovery_link_tag(:atom, :controller => 'activities', :action => 'index', :id => @project, :show_wiki_edits => 1, :format => 'atom', :key => User.current.rss_key) %>
+<%= content_for :header_tags do %>
+<%= auto_discovery_link_tag(:atom, :controller => 'activities',
+        :action => 'index', :id => @project, :show_wiki_edits => 1,
+        :format => 'atom', :key => User.current.rss_key) %>
 <% end %>
