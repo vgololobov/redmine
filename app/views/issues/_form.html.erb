@@ -10,6 +10,7 @@
 <p><%= f.select :tracker_id, @project.trackers.collect {|t| [t.name, t.id]}, :required => true %></p>
 <%= observe_field :issue_tracker_id, :url => project_issue_form_path(@project, :id => @issue),
                                      :update => :attributes,
+                                     :method => :get,
                                      :with => "Form.serialize('issue-form')" %>
 <% end %>
 
