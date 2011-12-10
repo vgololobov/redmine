@@ -83,6 +83,10 @@ Redmine::Application.routes.draw do |map|
   map.connect 'my/remove_block', :controller => 'my', :action => 'remove_block', :conditions => {:method => :post}
   map.connect 'my/order_blocks', :controller => 'my', :action => 'order_blocks', :conditions => {:method => :post}
 
+  # TODO
+  map.connect '/projects/:project_id/issues', :controller => 'issues', :action => 'index' # , :conditions => { :method => :post }
+  map.connect '/projects/:project_id/issues/new', :controller => 'issues', :action => 'new' #, :conditions => { :method => :post }
+
   map.resources :issues, :collection => {:bulk_edit => :get, :bulk_update => :post} do |issues|
     issues.resources :time_entries, :controller => 'timelog', :collection => {:report => :get}
     issues.resources :relations, :shallow => true, :controller => 'issue_relations', :only => [:index, :show, :create, :destroy]
