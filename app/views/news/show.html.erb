@@ -16,8 +16,9 @@
 
 <% if authorize_for('news', 'edit') %>
 <div id="edit-news" style="display:none;">
-<% labelled_form_for :news, @news, :url => news_path(@news),
-                                           :html => { :id => 'news-form', :method => :put } do |f| %>
+<%= labelled_form_for @news, :as =>:news,
+                      :url => news_path(@news), 
+                      :html => { :id => 'news-form', :method => :put } do |f| %>
 <%= render :partial => 'form', :locals => { :f => f } %>
 <%= submit_tag l(:button_save) %>
 <%= link_to_remote l(:label_preview),
