@@ -4,6 +4,8 @@ require 'active_support/core_ext/object/with_options'
 require 'active_support/core_ext/object/try'
 require 'active_support/inflector'
 
+require 'rack/mount'
+
 module RailsLegacyMapper
   class Mapper #:nodoc:
     def initialize(set) #:nodoc:
