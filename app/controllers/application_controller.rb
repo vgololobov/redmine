@@ -375,9 +375,9 @@ class ApplicationController < ActionController::Base
 
   def self.accept_api_auth(*actions)
     if actions.any?
-      # write_inheritable_attribute('accept_api_auth_actions', actions)
+       write_inheritable_attribute('accept_api_auth_actions', actions)
     else
-      # read_inheritable_attribute('accept_api_auth_actions') || []
+       read_inheritable_attribute('accept_api_auth_actions') || []
     end
   end
 
