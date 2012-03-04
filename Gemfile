@@ -4,7 +4,6 @@ source :rubyforge
 source :gemcutter
 
 gem 'rails', '3.2.0.rc1'
-
 gem 'dynamic_form'
 
 # gem 'rubytree', '0.5.2', :require => 'tree'
@@ -12,6 +11,9 @@ gem 'rubytree', '0.7.0'
 gem 'coderay'
 
 gem "fastercsv", "~> 1.5.0", :platforms => [:mri_18, :jruby, :mingw_18]
+
+gem 'unicorn'
+
 
 # TODO rails-3.1: review the core changes to awesome_nested_set and decide on actions
 gem 'awesome_nested_set'
